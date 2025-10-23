@@ -15,7 +15,7 @@ const ServiceDetails = () => {
     const timer = setTimeout(() => {
       const found = servicesData.find((s) => s.serviceId === parseInt(id));
       setService(found);
-    }, 800); // 👈 optional small delay to make loader visible
+    }, 800);
     return () => clearTimeout(timer);
   }, [id]);
 
@@ -26,70 +26,76 @@ const ServiceDetails = () => {
     setEmail("");
   };
 
-  // ✅ Use custom Loading component
   if (!service) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 mt-28 mb-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="md:flex md:gap-10 items-stretch">
         {/* Service Image */}
         <img
           src={service.image}
           alt={service.serviceName}
-          className="rounded-2xl w-full shadow-md object-cover"
+          className="rounded-2xl shadow-md object-cover w-full md:w-1/2 h-full"
         />
 
         {/* Service Info */}
-        <div>
-          <h2 className="text-4xl font-extrabold text-[#FF6B6B] mb-3">
-            {service.serviceName}
-          </h2>
-
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            {service.description}
-          </p>
-
-          <p className="text-gray-800 font-semibold">
-            Provider:{" "}
-            <span className="font-normal text-gray-600">
-              {service.providerName}
+        <div className="mt-6 md:mt-0 md:w-1/2 flex flex-col justify-between h-full">
+          <div>
+            {/* Category */}
+            <span className="inline-block bg-[#FF6B6B] text-white font-semibold px-3 py-1 rounded-full mb-3">
+              {service.category}
             </span>
-          </p>
 
-          <p className="text-gray-800">
-            Email:{" "}
-            <span className="font-normal text-gray-600">
-              {service.providerEmail}
-            </span>
-          </p>
+            <h2 className="text-4xl font-extrabold text-[#FF6B6B] mb-3">
+              {service.serviceName}
+            </h2>
 
-          <p className="mt-2 font-bold text-[#FF6B6B] text-lg">
-            Price: ${service.price}
-          </p>
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              {service.description}
+            </p>
 
-          {/* Rating Stars */}
-          <div className="flex items-center gap-1 mt-2">
-            {[...Array(5)].map((_, index) => (
-              <FaStar
-                key={index}
-                className={`${
-                  index < Math.round(service.rating)
-                    ? "text-yellow-400"
-                    : "text-gray-300"
-                } w-5 h-5`}
-              />
-            ))}
-            <span className="text-sm text-gray-500 ml-2">
-              ({service.rating.toFixed(1)})
-            </span>
+            <p className="text-gray-800 font-semibold">
+              Provider:{" "}
+              <span className="font-normal text-gray-600">
+                {service.providerName}
+              </span>
+            </p>
+
+            <p className="text-gray-800">
+              Email:{" "}
+              <span className="font-normal text-gray-600">
+                {service.providerEmail}
+              </span>
+            </p>
+
+            <p className="mt-2 font-bold text-[#FF6B6B] text-lg">
+              Price: ${service.price}
+            </p>
+
+            {/* Rating Stars */}
+            <div className="flex items-center gap-1 mt-2">
+              {[...Array(5)].map((_, index) => (
+                <FaStar
+                  key={index}
+                  className={`${
+                    index < Math.round(service.rating)
+                      ? "text-yellow-400"
+                      : "text-gray-300"
+                  } w-5 h-5`}
+                />
+              ))}
+              <span className="text-sm text-gray-500 ml-2">
+                ({service.rating.toFixed(1)})
+              </span>
+            </div>
+
+            <p className="mt-2 text-gray-700">
+              Slots Available:{" "}
+              <span className="font-semibold text-gray-800">
+                {service.slotsAvailable}
+              </span>
+            </p>
           </div>
-
-          <p className="mt-2 text-gray-700">
-            Slots Available:{" "}
-            <span className="font-semibold text-gray-800">
-              {service.slotsAvailable}
-            </span>
-          </p>
 
           {/* Booking Form */}
           <form
@@ -105,7 +111,7 @@ const ServiceDetails = () => {
               placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3"
+              className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3 placeholder-gray-400"
               required
             />
 
@@ -114,7 +120,7 @@ const ServiceDetails = () => {
               placeholder="Your Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3"
+              className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3 placeholder-gray-400"
               required
             />
 

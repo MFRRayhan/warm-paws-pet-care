@@ -68,7 +68,79 @@
     "rating": 4.8,
     "slotsAvailable": 3,
     "description": "Indoor fun and cozy setups for cats during cold months.",
-    "image": "https://i.ibb.co.com/8g3QJLnT/Cat-Entertain.webp",
+    "image": "https://i.ibb.co.com/YF3b57qS/image-3.jpg",
     "category": "Activities"
+  },
+  {
+    "serviceId": 7,
+    "serviceName": "Pet Winter Safety Check",
+    "providerName": "SafePaws Vet",
+    "providerEmail": "vet@safepaws.com",
+    "price": 40,
+    "rating": 4.9,
+    "slotsAvailable": 4,
+    "description": "Complete winter safety checkup including vaccination and paw protection.",
+    "image": "https://i.ibb.co.com/9Hgdr1cv/photo-1625321171045-1fea4ac688e9.jpg",
+    "category": "Health"
+  },
+  {
+    "serviceId": 8,
+    "serviceName": "Heated Pet Blanket Delivery",
+    "providerName": "WarmPaws",
+    "providerEmail": "contact@warmpaws.com",
+    "price": 60,
+    "rating": 4.7,
+    "slotsAvailable": 5,
+    "description": "Delivery of heated blankets and cozy bedding for pets at home.",
+    "image": "https://i.ibb.co.com/YFy6TnrW/photo-1749309734942-04046e01b229.jpg",
+    "category": "Accessories"
+  },
+  {
+    "serviceId": 9,
+    "serviceName": "Winter Pet Photography",
+    "providerName": "FurryLens Studio",
+    "providerEmail": "studio@furrylens.com",
+    "price": 80,
+    "rating": 4.9,
+    "slotsAvailable": 2,
+    "description": "Capture adorable winter moments of your pets in cozy setups.",
+    "image": "https://i.ibb.co.com/bMsKcQ6W/premium-photo-1663957884429-ecb152a3b8b0.jpg",
+    "category": "Service"
+  },
+  {
+    "serviceId": 10,
+    "serviceName": "Pet Hot Chocolate & Treats",
+    "providerName": "PawsDelight",
+    "providerEmail": "treats@pawsdelight.com",
+    "price": 20,
+    "rating": 4.6,
+    "slotsAvailable": 7,
+    "description": "Special pet-friendly hot chocolate and treats to keep pets warm and happy.",
+    "image": "https://i.ibb.co.com/p6XyxmD8/premium-photo-1661854817261-709ee570534a.jpg",
+    "category": "Food"
+  },
+  {
+    "serviceId": 11,
+    "serviceName": "Indoor Play & Exercise",
+    "providerName": "ActivePaws",
+    "providerEmail": "play@activepaws.com",
+    "price": 45,
+    "rating": 4.8,
+    "slotsAvailable": 3,
+    "description": "Safe indoor play sessions to keep pets active during cold weather.",
+    "image": "https://i.ibb.co.com/v6T26y0b/photo-1596076463549-b4d123456b6b.jpg",
+    "category": "Activities"
+  },
+  {
+    "serviceId": 12,
+    "serviceName": "Winter Pet Grooming Kit Delivery",
+    "providerName": "PetCare Supplies",
+    "providerEmail": "shop@petcaresupplies.com",
+    "price": 55,
+    "rating": 4.7,
+    "slotsAvailable": 6,
+    "description": "Delivery of winter grooming kits including shampoo, paw balm, and brushes.",
+    "image": "https://i.ibb.co.com/5xnbYy61/pricing-3.jpg",
+    "category": "Grooming"
   }
 ]

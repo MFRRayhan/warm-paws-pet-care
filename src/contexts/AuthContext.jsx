@@ -10,7 +10,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { app } from "../firebaseConfig"; // adjust path if needed
+import { app } from "../firebaseConfig";
 
 export const AuthContext = createContext();
 

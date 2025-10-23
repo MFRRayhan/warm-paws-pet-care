@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Signup = () => {
-  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -14,6 +14,25 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  // Password validation state
+  const [hasUpper, setHasUpper] = useState(false);
+  const [hasLower, setHasLower] = useState(false);
+  const [hasLength, setHasLength] = useState(false);
+
+  // Redirect to Home when user state changes
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  // Live password validation
+  useEffect(() => {
+    setHasUpper(/[A-Z]/.test(password));
+    setHasLower(/[a-z]/.test(password));
+    setHasLength(password.length >= 6);
+  }, [password]);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -24,20 +43,13 @@ const Signup = () => {
       );
     }
 
-    if (!/[A-Z]/.test(password)) {
-      return toast.error("Password must contain at least one uppercase letter");
-    }
-    if (!/[a-z]/.test(password)) {
-      return toast.error("Password must contain at least one lowercase letter");
-    }
-    if (password.length < 6) {
-      return toast.error("Password must be at least 6 characters long");
+    if (!hasUpper || !hasLower || !hasLength) {
+      return toast.error("Please meet all password requirements.");
     }
 
     try {
       await createUser(email, password, name, photo);
-      toast.success("Signup successful!");
-      navigate("/");
+      toast.success("Signup successful! Redirecting...");
     } catch (error) {
       toast.error(error.message);
     }
@@ -46,8 +58,7 @@ const Signup = () => {
   const handleGoogleSignup = async () => {
     try {
       await signInWithGoogle();
-      toast.success("Google login successful!");
-      navigate("/");
+      toast.success("Google login successful! Redirecting...");
     } catch (error) {
       toast.error(error.message);
     }
@@ -64,26 +75,29 @@ const Signup = () => {
         <label>Name</label>
         <input
           type="text"
+          placeholder="Enter your full name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition"
+          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
           required
         />
 
         <label>Photo URL</label>
         <input
           type="text"
+          placeholder="Paste your photo URL (optional)"
           value={photo}
           onChange={(e) => setPhoto(e.target.value)}
-          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition"
+          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
         />
 
         <label>Email</label>
         <input
           type="email"
+          placeholder="Enter your email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition"
+          className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
           required
         />
 
@@ -91,9 +105,10 @@ const Signup = () => {
         <div className="relative mb-2">
           <input
             type={showPassword ? "text" : "password"}
+            placeholder="Create a strong password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-200 w-full p-2 rounded focus:ring-2 focus:ring-[#FF8F8F] outline-none transition"
+            className="border border-gray-200 w-full p-2 rounded focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
             required
           />
           <span
@@ -104,7 +119,19 @@ const Signup = () => {
           </span>
         </div>
 
-        {/* ✅ Terms & Conditions */}
+        {/* Live password suggestions */}
+        <ul className="mb-2 text-sm">
+          <li className={hasUpper ? "text-green-500" : "text-red-500"}>
+            • At least one uppercase letter
+          </li>
+          <li className={hasLower ? "text-green-500" : "text-red-500"}>
+            • At least one lowercase letter
+          </li>
+          <li className={hasLength ? "text-green-500" : "text-red-500"}>
+            • Minimum 6 characters
+          </li>
+        </ul>
+
         <div className="flex items-center mb-2">
           <input
             type="checkbox"

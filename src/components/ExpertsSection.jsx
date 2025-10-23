@@ -1,3 +1,5 @@
+import { FaStethoscope } from "react-icons/fa";
+
 const experts = [
   {
     id: 1,
@@ -43,8 +45,8 @@ const ExpertsSection = () => {
               alt={expert.name}
               className="w-28 h-28 mx-auto rounded-full object-cover mb-4"
             />
-            <h3 className="text-xl font-semibold text-gray-800">
-              {expert.name}
+            <h3 className="text-xl font-semibold text-gray-800 flex items-center justify-center gap-2">
+              <FaStethoscope className="text-[#FF8F8F]" /> {expert.name}
             </h3>
             <p className="text-[#FF8F8F] mt-1">{expert.title}</p>
           </div>
