@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import ServiceCard from "../components/ServiceCard";
 import servicesData from "../data/services.json";
 
@@ -8,6 +9,17 @@ const ServicesPage = () => {
   useEffect(() => {
     setServices(servicesData);
   }, []);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 mt-24 mb-16">

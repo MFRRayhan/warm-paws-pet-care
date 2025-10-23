@@ -8,13 +8,16 @@ import servicesData from "../data/services.json";
 const ServiceDetails = () => {
   const { id } = useParams();
   const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+    setLoading(true);
     const timer = setTimeout(() => {
       const found = servicesData.find((s) => s.serviceId === parseInt(id));
       setService(found);
+      setLoading(false);
     }, 800);
     return () => clearTimeout(timer);
   }, [id]);
@@ -26,7 +29,7 @@ const ServiceDetails = () => {
     setEmail("");
   };
 
-  if (!service) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 mt-28 mb-20">

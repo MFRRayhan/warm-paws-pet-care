@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
+import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Profile = () => {
@@ -16,6 +17,17 @@ const Profile = () => {
       toast.error(error.message);
     }
   };
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex justify-center items-center min-h-screen">

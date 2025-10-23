@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { Toaster } from "react-hot-toast";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import Footer from "./components/Footer";
-import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -16,19 +14,7 @@ import ServiceDetails from "./pages/ServiceDetails";
 import ServicesPage from "./pages/ServicesPage";
 import Signup from "./pages/Signup";
 
-import { AuthContext } from "./provider/AuthProvider";
-
 const App = () => {
-  const { loading } = useContext(AuthContext);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen w-screen">
-        <Loading />
-      </div>
-    );
-  }
-
   return (
     <Router>
       <Navbar />
