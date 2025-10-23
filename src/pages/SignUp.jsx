@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Signup = () => {
@@ -15,19 +16,24 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  // Password validation state
   const [hasUpper, setHasUpper] = useState(false);
   const [hasLower, setHasLower] = useState(false);
   const [hasLength, setHasLength] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Redirect to Home when user state changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (user) {
       navigate("/");
     }
   }, [user, navigate]);
 
-  // Live password validation
   useEffect(() => {
     setHasUpper(/[A-Z]/.test(password));
     setHasLower(/[a-z]/.test(password));
@@ -36,17 +42,14 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
     if (!acceptedTerms) {
       return toast.error(
         "You must accept the Terms and Conditions to register!"
       );
     }
-
     if (!hasUpper || !hasLower || !hasLength) {
       return toast.error("Please meet all password requirements.");
     }
-
     try {
       await createUser(email, password, name, photo);
       toast.success("Signup successful! Redirecting...");
@@ -63,6 +66,8 @@ const Signup = () => {
       toast.error(error.message);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -119,7 +124,6 @@ const Signup = () => {
           </span>
         </div>
 
-        {/* Live password suggestions */}
         <ul className="mb-2 text-sm">
           <li className={hasUpper ? "text-green-500" : "text-red-500"}>
             • At least one uppercase letter

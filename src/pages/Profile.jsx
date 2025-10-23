@@ -1,13 +1,34 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Profile = () => {
   const { user, updateUserProfile } = useContext(AuthContext);
-  const [name, setName] = useState(user?.displayName || "");
-  const [photo, setPhoto] = useState(user?.photoURL || "");
+  const navigate = useNavigate();
+  const alertShownRef = useRef(false);
+
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!user && !alertShownRef.current) {
+        toast.error("You need to login first to access your profile.");
+        alertShownRef.current = true;
+        navigate("/login");
+      } else if (user) {
+        setName(user.displayName || "");
+        setPhoto(user.photoURL || "");
+      }
+      setLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [user, navigate]);
 
   const handleUpdate = async () => {
     try {
@@ -18,23 +39,14 @@ const Profile = () => {
     }
   };
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   if (loading) return <Loading />;
+  if (!user) return null;
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-md p-6 border border-gray-200 rounded shadow-md">
         <h2 className="text-2xl font-bold mb-4 text-[#FF8F8F]">My Profile</h2>
 
-        {/* Display user photo or default icon */}
         {photo ? (
           <img
             src={photo}

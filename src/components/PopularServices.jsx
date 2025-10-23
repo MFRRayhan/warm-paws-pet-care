@@ -1,19 +1,21 @@
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import { FaStethoscope } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import servicesData from "../data/services.json";
 import { AuthContext } from "../provider/AuthProvider";
 
 const PopularServices = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const popularServices = servicesData
     .filter((service) => service.rating >= 4.5)
     .slice(0, 6);
 
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   const handleServiceClick = (id) => {
     if (!user) {
+      toast.error("Please login or sign up to access this service.");
       navigate("/login");
     } else {
       navigate(`/service/${id}`);
@@ -22,6 +24,7 @@ const PopularServices = () => {
 
   const handleAllServicesClick = () => {
     if (!user) {
+      toast.error("Please login or sign up to view all services.");
       navigate("/login");
     } else {
       navigate("/services");
@@ -49,7 +52,7 @@ const PopularServices = () => {
               alt={service.serviceName}
               className="h-80 w-full object-cover rounded"
             />
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 mt-3">
               <FaStethoscope className="w-10 h-10 text-[#ff8f8f]" />
               <div className="text-left">
                 <h3 className="font-bold text-lg mt-2 text-[#333]">

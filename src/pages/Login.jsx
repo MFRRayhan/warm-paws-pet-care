@@ -6,7 +6,12 @@ import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
-  const { signIn, signInWithGoogle } = useContext(AuthContext);
+  const {
+    signIn,
+    signInWithGoogle,
+    user,
+    loading: authLoading,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -14,13 +19,24 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, authLoading, from, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signIn(email, password);
       toast.success("Login successful!");
-      navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message);
     }
@@ -30,22 +46,12 @@ const Login = () => {
     try {
       await signInWithGoogle();
       toast.success("Google login successful!");
-      navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) return <Loading />;
+  if (authLoading || loading) return <Loading />;
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -91,9 +97,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className="bg-[#FF8F8F] text-white w-full py-2 rounded mt-2
-             hover:bg-[#FF6F91] hover:shadow-lg hover:-translate-y-0.5
-             transition-all duration-300"
+          className="bg-[#FF8F8F] text-white w-full py-2 rounded mt-2 hover:bg-[#FF6F91] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
         >
           Login
         </button>

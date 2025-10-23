@@ -21,15 +21,11 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route
-          path="/profile"
+          path="/services"
           element={
             <PrivateRoute>
-              <Profile />
+              <ServicesPage />
             </PrivateRoute>
           }
         />
@@ -41,7 +37,17 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

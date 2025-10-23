@@ -34,48 +34,37 @@ const ServiceDetails = () => {
   return (
     <div className="container mx-auto px-4 mt-28 mb-20">
       <div className="md:flex md:gap-10 items-stretch">
-        {/* Service Image */}
         <img
           src={service.image}
           alt={service.serviceName}
           className="rounded-2xl shadow-md object-cover w-full md:w-1/2 h-full"
         />
-
-        {/* Service Info */}
         <div className="mt-6 md:mt-0 md:w-1/2 flex flex-col justify-between h-full">
           <div>
-            {/* Category */}
             <span className="inline-block bg-[#FF6B6B] text-white font-semibold px-3 py-1 rounded-full mb-3">
               {service.category}
             </span>
-
             <h2 className="text-4xl font-extrabold text-[#FF6B6B] mb-3">
               {service.serviceName}
             </h2>
-
             <p className="text-gray-700 mb-4 leading-relaxed">
               {service.description}
             </p>
-
             <p className="text-gray-800 font-semibold">
               Provider:{" "}
               <span className="font-normal text-gray-600">
                 {service.providerName}
               </span>
             </p>
-
             <p className="text-gray-800">
               Email:{" "}
               <span className="font-normal text-gray-600">
                 {service.providerEmail}
               </span>
             </p>
-
             <p className="mt-2 font-bold text-[#FF6B6B] text-lg">
               Price: ${service.price}
             </p>
-
-            {/* Rating Stars */}
             <div className="flex items-center gap-1 mt-2">
               {[...Array(5)].map((_, index) => (
                 <FaStar
@@ -91,7 +80,6 @@ const ServiceDetails = () => {
                 ({service.rating.toFixed(1)})
               </span>
             </div>
-
             <p className="mt-2 text-gray-700">
               Slots Available:{" "}
               <span className="font-semibold text-gray-800">
@@ -99,8 +87,6 @@ const ServiceDetails = () => {
               </span>
             </p>
           </div>
-
-          {/* Booking Form */}
           <form
             onSubmit={handleBook}
             className="mt-6 border border-gray-300 p-5 rounded-2xl shadow-sm"
@@ -108,7 +94,6 @@ const ServiceDetails = () => {
             <h3 className="font-bold text-lg mb-3 text-gray-800">
               Book This Service
             </h3>
-
             <input
               type="text"
               placeholder="Your Name"
@@ -117,7 +102,6 @@ const ServiceDetails = () => {
               className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3 placeholder-gray-400"
               required
             />
-
             <input
               type="email"
               placeholder="Your Email"
@@ -126,7 +110,6 @@ const ServiceDetails = () => {
               className="border border-gray-300 focus:ring-2 focus:ring-[#FF6B6B] outline-none w-full p-2 rounded-lg mb-3 placeholder-gray-400"
               required
             />
-
             <button
               type="submit"
               className="bg-[#FF6B6B] hover:bg-[#ff5252] transition text-white font-semibold w-full py-2 rounded-lg shadow-md"
