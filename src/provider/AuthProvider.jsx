@@ -16,114 +16,69 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
   // Create user (sign up)
   const createUser = async (email, password, name, photoURL) => {
-    setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await updateProfile(userCredential.user, {
-        displayName: name,
-        photoURL: photoURL,
-      });
-      setUser({ ...userCredential.user });
-      return userCredential.user;
-    } catch (error) {
-      console.error("Error creating user:", error.message);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await updateProfile(userCredential.user, { displayName: name, photoURL });
+    setUser({ ...userCredential.user });
+    return userCredential.user;
   };
 
-  // Sign in with email and password
+  // Sign in with email/password
   const signIn = async (email, password) => {
-    setLoading(true);
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      setUser(userCredential.user);
-      return userCredential.user;
-    } catch (error) {
-      console.error("Login failed:", error.message);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    setUser(userCredential.user);
+    return userCredential.user;
   };
 
   // Sign in with Google
   const signInWithGoogle = async () => {
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      setUser(result.user);
-      return result.user;
-    } catch (error) {
-      console.error("Google sign-in failed:", error.message);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
+    const result = await signInWithPopup(auth, googleProvider);
+    setUser(result.user);
+    return result.user;
   };
 
-  // Log out
+  // Logout
   const logOut = async () => {
-    setLoading(true);
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
+    await signOut(auth);
+    setUser(null);
   };
 
   // Reset password
   const resetPassword = async (email) => {
-    try {
-      await sendPasswordResetEmail(auth, email);
-    } catch (error) {
-      console.error("Password reset error:", error.message);
-      throw error;
-    }
+    await sendPasswordResetEmail(auth, email);
   };
 
   // Update user profile
   const updateUserProfile = async (profile) => {
     if (!auth.currentUser) return;
-    try {
-      await updateProfile(auth.currentUser, profile);
-      setUser({ ...auth.currentUser });
-    } catch (error) {
-      console.error("Profile update failed:", error.message);
-      throw error;
-    }
+    await updateProfile(auth.currentUser, profile);
+    setUser({ ...auth.currentUser });
   };
 
-  // Listen to auth state changes
+  // Listen to auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      setAuthLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
   const authInfo = {
     user,
-    loading,
+    authLoading,
     createUser,
     signIn,
     signInWithGoogle,
@@ -134,7 +89,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={authInfo}>
-      {loading ? <Loading /> : children}
+      {authLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 };

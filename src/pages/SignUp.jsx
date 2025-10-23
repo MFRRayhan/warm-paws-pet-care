@@ -6,7 +6,8 @@ import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Signup = () => {
-  const { createUser, signInWithGoogle, user } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, user, authLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -19,68 +20,50 @@ const Signup = () => {
   const [hasUpper, setHasUpper] = useState(false);
   const [hasLower, setHasLower] = useState(false);
   const [hasLength, setHasLength] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  // Password validation
   useEffect(() => {
     setHasUpper(/[A-Z]/.test(password));
     setHasLower(/[a-z]/.test(password));
     setHasLength(password.length >= 6);
   }, [password]);
 
-  // Redirect if user is already logged in
   useEffect(() => {
-    if (user) {
-      navigate("/");
+    if (!authLoading && user) {
+      navigate("/", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, authLoading, navigate]);
 
-  // Handle email/password signup
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (!acceptedTerms) {
-      return toast.error(
-        "You must accept the Terms and Conditions to register!"
-      );
-    }
-    if (!hasUpper || !hasLower || !hasLength) {
-      return toast.error("Please meet all password requirements.");
-    }
-    setLoading(true);
+    if (!acceptedTerms)
+      return toast.error("You must accept the Terms and Conditions!");
+    if (!hasUpper || !hasLower || !hasLength)
+      return toast.error("Password requirements not met!");
+
     try {
       await createUser(email, password, name, photo);
       toast.success("Signup successful! Redirecting...");
     } catch (error) {
       toast.error(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Handle Google signup/login
   const handleGoogleSignup = async () => {
-    setLoading(true);
     try {
       await signInWithGoogle();
       toast.success("Google login successful! Redirecting...");
     } catch (error) {
-      if (error.code === "auth/popup-closed-by-user") {
-        toast("Google sign-in canceled");
-      } else {
-        toast.error(error.message);
-      }
-    } finally {
-      setLoading(false);
+      console.log(error);
     }
   };
 
-  if (loading) return <Loading />;
+  if (authLoading) return <Loading />;
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <form
-        onSubmit={handleSignup}
         className="w-full max-w-md p-6 border border-gray-200 rounded shadow-md"
+        onSubmit={handleSignup}
       >
         <h2 className="text-2xl font-bold mb-4 text-[#FF8F8F]">Sign Up</h2>
 
@@ -106,7 +89,7 @@ const Signup = () => {
         <label>Email</label>
         <input
           type="email"
-          placeholder="Enter your email address"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
@@ -146,12 +129,11 @@ const Signup = () => {
         <div className="flex items-center mb-2">
           <input
             type="checkbox"
-            id="terms"
             checked={acceptedTerms}
             onChange={(e) => setAcceptedTerms(e.target.checked)}
             className="mr-2"
           />
-          <label htmlFor="terms" className="text-sm">
+          <label className="text-sm">
             I accept the{" "}
             <Link to="#" className="text-[#FF8F8F] underline">
               Terms and Conditions
@@ -161,9 +143,7 @@ const Signup = () => {
 
         <button
           type="submit"
-          className="bg-[#FF8F8F] text-white w-full py-2 rounded mt-2
-             hover:bg-[#FF6F91] hover:shadow-lg hover:-translate-y-0.5
-             transition-all duration-300"
+          className="bg-[#FF8F8F] text-white w-full py-2 rounded mt-2 hover:bg-[#FF6F91] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
         >
           Register
         </button>

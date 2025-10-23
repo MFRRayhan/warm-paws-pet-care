@@ -12,9 +12,9 @@ const ServicesPage = () => {
   const location = useLocation();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const alertShown = useRef(false); // ✅ prevent double alerts
+  const alertShown = useRef(false);
 
-  // local page loading (animation)
+  // local page loading
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
