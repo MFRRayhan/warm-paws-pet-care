@@ -46,14 +46,12 @@ const Login = () => {
       await signInWithGoogle();
       toast.success("Google login successful!");
     } catch (error) {
-      // 🔥 Popup বন্ধ করলে এখন UI ফাঁকা থাকবে না
       if (error.code === "auth/popup-closed-by-user") {
         toast("Google sign-in canceled");
       } else {
         toast.error(error.message);
       }
     } finally {
-      // সব অবস্থায়ই loading false হবে
       setLoading(false);
     }
   };
