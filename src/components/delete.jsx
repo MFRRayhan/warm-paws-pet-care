@@ -19,7 +19,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!authLoading && user) {
@@ -46,14 +51,12 @@ const Login = () => {
       await signInWithGoogle();
       toast.success("Google login successful!");
     } catch (error) {
-      // 🔥 Popup বন্ধ করলে এখন UI ফাঁকা থাকবে না
       if (error.code === "auth/popup-closed-by-user") {
         toast("Google sign-in canceled");
       } else {
         toast.error(error.message);
       }
     } finally {
-      // সব অবস্থায়ই loading false হবে
       setLoading(false);
     }
   };

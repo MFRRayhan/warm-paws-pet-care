@@ -9,9 +9,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import { auth } from "../firebaseConfig";
 
-// Create Context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -121,7 +121,6 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // Context values
   const authInfo = {
     user,
     loading,
@@ -135,7 +134,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={authInfo}>
-      {!loading && children}
+      {loading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 };
