@@ -1,0 +1,74 @@
+[
+  {
+    "serviceId": 1,
+    "serviceName": "Winter Coat Fitting for Dogs",
+    "providerName": "PawCare Studio",
+    "providerEmail": "info@pawcare.com",
+    "price": 25,
+    "rating": 4.9,
+    "slotsAvailable": 4,
+    "description": "Custom coat fitting and warm outfit options to keep your dog comfortable in the cold.",
+    "image": "https://i.ibb.co.com/YF1rVtR4/Poodle-puppy-wearing-a-jacket-in-winter.jpg",
+    "category": "Clothing"
+  },
+  {
+    "serviceId": 2,
+    "serviceName": "Winter Grooming & Paw Treatment",
+    "providerName": "CozyPets Grooming",
+    "providerEmail": "hello@cozypets.com",
+    "price": 30,
+    "rating": 4.8,
+    "slotsAvailable": 3,
+    "description": "Professional grooming with moisturizing paw balm and winter-safe shampoo.",
+    "image": "https://i.ibb.co.com/zVrVP2cp/paw-care.jpg",
+    "category": "Grooming"
+  },
+  {
+    "serviceId": 3,
+    "serviceName": "Warm Pet Bed Setup",
+    "providerName": "FurryNest",
+    "providerEmail": "support@furrynest.com",
+    "price": 50,
+    "rating": 4.7,
+    "slotsAvailable": 2,
+    "description": "Installation of heated bedding and cozy blankets for your pets.",
+    "image": "https://i.ibb.co.com/5XVVjwBw/warm-pet-bed-setup.jpg",
+    "category": "Accessories"
+  },
+  {
+    "serviceId": 4,
+    "serviceName": "Winter Hydration Check",
+    "providerName": "HealthyPaws Clinic",
+    "providerEmail": "info@healthypaws.com",
+    "price": 20,
+    "rating": 4.9,
+    "slotsAvailable": 5,
+    "description": "Ensure pets are properly hydrated and healthy during winter.",
+    "image": "https://i.ibb.co.com/jvw1mJDN/image.png",
+    "category": "Health"
+  },
+  {
+    "serviceId": 5,
+    "serviceName": "Winter Dog Walking",
+    "providerName": "SnowPaws",
+    "providerEmail": "contact@snowpaws.com",
+    "price": 15,
+    "rating": 4.6,
+    "slotsAvailable": 6,
+    "description": "Short walks with warm jackets to prevent cold exposure.",
+    "image": "https://i.ibb.co.com/hxPQcKJ5/Winter-Dog-Walk-Header-Image-Social-Featured.png",
+    "category": "Service"
+  },
+  {
+    "serviceId": 6,
+    "serviceName": "Cozy Cat Indoor Activities",
+    "providerName": "MeowCare",
+    "providerEmail": "hello@meowcare.com",
+    "price": 35,
+    "rating": 4.8,
+    "slotsAvailable": 3,
+    "description": "Indoor fun and cozy setups for cats during cold months.",
+    "image": "https://i.ibb.co.com/8g3QJLnT/Cat-Entertain.webp",
+    "category": "Activities"
+  }
+]
