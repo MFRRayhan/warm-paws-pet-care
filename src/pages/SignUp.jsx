@@ -19,27 +19,23 @@ const Signup = () => {
   const [hasUpper, setHasUpper] = useState(false);
   const [hasLower, setHasLower] = useState(false);
   const [hasLength, setHasLength] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
-
+  // Password validation
   useEffect(() => {
     setHasUpper(/[A-Z]/.test(password));
     setHasLower(/[a-z]/.test(password));
     setHasLength(password.length >= 6);
   }, [password]);
 
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  // Handle email/password signup
   const handleSignup = async (e) => {
     e.preventDefault();
     if (!acceptedTerms) {
@@ -50,20 +46,31 @@ const Signup = () => {
     if (!hasUpper || !hasLower || !hasLength) {
       return toast.error("Please meet all password requirements.");
     }
+    setLoading(true);
     try {
       await createUser(email, password, name, photo);
       toast.success("Signup successful! Redirecting...");
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Handle Google signup/login
   const handleGoogleSignup = async () => {
+    setLoading(true);
     try {
       await signInWithGoogle();
       toast.success("Google login successful! Redirecting...");
     } catch (error) {
-      toast.error(error.message);
+      if (error.code === "auth/popup-closed-by-user") {
+        toast("Google sign-in canceled");
+      } else {
+        toast.error(error.message);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
