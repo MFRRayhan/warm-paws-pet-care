@@ -57,7 +57,7 @@ const Login = () => {
       >
         <h2 className="text-2xl font-bold mb-4 text-[#FF8F8F]">Login</h2>
 
-        <label>Email</label>
+        <label className="block mb-1 font-medium text-gray-700">Email</label>
         <input
           type="email"
           value={email}
@@ -66,7 +66,7 @@ const Login = () => {
           required
         />
 
-        <label>Password</label>
+        <label className="block mb-1 font-medium text-gray-700">Password</label>
         <div className="relative mb-2">
           <input
             type={showPassword ? "text" : "password"}

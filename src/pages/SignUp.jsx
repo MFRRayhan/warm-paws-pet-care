@@ -67,7 +67,7 @@ const Signup = () => {
       >
         <h2 className="text-2xl font-bold mb-4 text-[#FF8F8F]">Sign Up</h2>
 
-        <label>Name</label>
+        <label className="block mb-1 font-medium text-gray-700">Name</label>
         <input
           type="text"
           placeholder="Enter your full name"
@@ -77,7 +77,9 @@ const Signup = () => {
           required
         />
 
-        <label>Photo URL</label>
+        <label className="block mb-1 font-medium text-gray-700">
+          Photo URL
+        </label>
         <input
           type="text"
           placeholder="Paste your photo URL (optional)"
@@ -86,7 +88,7 @@ const Signup = () => {
           className="border border-gray-200 w-full p-2 rounded mb-2 focus:ring-2 focus:ring-[#FF8F8F] outline-none transition placeholder-gray-400"
         />
 
-        <label>Email</label>
+        <label className="block mb-1 font-medium text-gray-700">Email</label>
         <input
           type="email"
           placeholder="Enter your email"
@@ -96,7 +98,7 @@ const Signup = () => {
           required
         />
 
-        <label>Password</label>
+        <label className="block mb-1 font-medium text-gray-700">Password</label>
         <div className="relative mb-2">
           <input
             type={showPassword ? "text" : "password"}
