@@ -18,6 +18,10 @@ const ForgetPassword = () => {
       setLoading(true);
       await resetPassword(email);
       toast.success("Password reset email sent! Check your inbox.");
+
+      setTimeout(() => {
+        window.open("https://mail.google.com", "_blank");
+      }, 2000);
     } catch (error) {
       console.error("Reset error:", error);
       if (error.code === "auth/user-not-found") toast.error("No user found!");

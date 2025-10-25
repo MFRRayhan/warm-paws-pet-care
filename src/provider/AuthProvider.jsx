@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import { auth } from "../firebaseConfig";
 
 export const AuthContext = createContext();
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
         updateUserProfile,
       }}
     >
-      {authLoading ? <p>Loading...</p> : children}
+      {authLoading ? <Loading></Loading> : children}
     </AuthContext.Provider>
   );
 };
